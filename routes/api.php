@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('/destinasi')->group(function () {
+    Route::get('/', function (Request $request) {
+        $json = json_decode(file_get_contents(public_path('testdata/destinasi/get.json')), true);
+        return response()->json($json);
+    });
+});

@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "nama": "Candi Borobudur",
+      "tempat": "Yogyakarta"
+    },
+    {
+      "id": 2,
+      "nama": "Masjid Istiqlal",
+      "tempat": "Jakarta"
+    },
+    {
+      "id": 3,
+      "nama": "Grand Indonesia Mall",
+      "tempat": "Jakarta"
+    },
+    {
+      "id": 4,
+      "nama": "Monumen Nasional",
+      "tempat": "Jakarta"
+    }
+  ]
+}
