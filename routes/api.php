@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\DestinasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('/destinasi')->group(function () {
-    Route::get('/', function (Request $request) {
-        $json = json_decode(file_get_contents(public_path('testdata/destinasi/get.json')), true);
-        return response()->json($json);
-    });
-});
+Route::resource('destinasi',App\Http\Controllers\API\DestinasiController::class);
+
+//or with this code (under this), works too!!
+// Route::get('destinasi',[DestinasiController::class, 'index']);
+
+// Route::prefix('/destinasi')->group(function () {
+//     Route::get('/', function (Request $request) {
+//         $json = json_decode(file_get_contents(public_path('testdata/destinasi/get.json')), true);
+//         return response()->json($json);
+//     });
+// });
