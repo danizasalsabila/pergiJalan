@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Destinasi;
+use DateTime;
 use App\Helpers\ApiFormatter;
 use Illuminate\Support\Facades\DB;
 
@@ -30,11 +31,13 @@ class DestinasiController extends Controller
             if($destinasi != null) {
                 return response ([
                     'status' => 'Data destinasi berhasil ditampilkan',
+                    'code' => 200,
                     'data' => $destinasi
                 ], 200);
             } else {
                 return response ([
                     'status' => 'failed',
+                    'code' => 404,
                     'message' => 'Data destinasi tidak ditemukan'
                 ], 404);
             }
@@ -51,10 +54,40 @@ class DestinasiController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
+        $dt = new DateTime();
+        $tahun = $dt->format('y');
+        $bulan = $dt->format('m');
+
+        $requestDestinasi = [
+            'name_destinasi' => $request->name_destinasi,
+            'address' => $request->address,
+            'city' => $request->city,
+            'category' => $request->category,
+            'created_at' => $dt
+
+        ];
+        
+
+        $createDestinasi = DB::table('destinasi')->insert($requestDestinasi);
+
+        if($createDestinasi != null){
+            return response([
+                'status' => 'success',
+                'message' => 'Destinasi Berhasil Ditambahkan',
+                'data' => $requestDestinasi
+            ], 200);
+        } else {
+            return response ([
+                'status' => 'failed',
+                'message' => 'Destinasi gagal Ditambahkan'
+            ], 404);
+        }
     }
 
     /**

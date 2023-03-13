@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('destinasi',App\Http\Controllers\API\DestinasiController::class);
+Route::post('destinasi/store', [DestinasiController::class, 'store']);
+// Route::post('create/destinasi', 'App\Http\Controllers\API\DestinasiController');
 
 //or with this code (under this), works too!!
 // Route::get('destinasi',[DestinasiController::class, 'index']);
