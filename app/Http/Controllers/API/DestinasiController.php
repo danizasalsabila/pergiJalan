@@ -100,18 +100,54 @@ class DestinasiController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit(string $id)
+     
+    public function edit($id)
     {
         //
     }
 
     /**
      * Update the specified resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         //
+        $getDestinasi = Destinasi::where('id', $id)->first();
+
+        $dt = new DateTime();
+        $tahun = $dt->format('y');
+        $bulan = $dt->format('m');
+
+        $requestDestinasi = [
+            'name_destinasi' => $request->name_destinasi,
+            'address' => $request->address,
+            'city' => $request->city,
+            'category' => $request->category,
+            'updated_at' => $dt
+        ];
+
+        $id = $getDestinasi->id;
+        $updateDestinasi = DB::table('destinasi')->where('id', $id)->update($requestDestinasi);
+
+        if($updateDestinasi != null){
+            return response([
+                'status' => 'success',
+                'message' => 'Destinasi Berhasil Diedit',
+                'data' => $requestDestinasi
+            ], 200);
+        } else {
+            return response ([
+                'status' => 'failed',
+                'message' => 'Destinasi gagal Diedit'
+            ], 404);
+        }
     }
 
     /**

@@ -15,16 +15,15 @@ use App\Http\Controllers\API\DestinasiController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::resource('destinasi',App\Http\Controllers\API\DestinasiController::class);
-Route::post('destinasi/store', [DestinasiController::class, 'store']);
-// Route::post('create/destinasi', 'App\Http\Controllers\API\DestinasiController');
-
-//or with this code (under this), works too!!
+//or with (under this) code, works too!!
 // Route::get('destinasi',[DestinasiController::class, 'index']);
+Route::post('destinasi/store', [DestinasiController::class, 'store']);
+Route::put('destinasi/update/{id}', [DestinasiController::class, 'update']);
 
 // Route::prefix('/destinasi')->group(function () {
 //     Route::get('/', function (Request $request) {
