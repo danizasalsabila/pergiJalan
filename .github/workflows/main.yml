@@ -15,4 +15,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: cd ~/sotobakarPergiJalan && ./pull.sh
+        script: cd ~/pergiJalan && ./pull.sh
