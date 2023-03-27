@@ -19,10 +19,18 @@ use App\Http\Controllers\API\DestinasiController;
 //     return $request->user();
 // });
 
-Route::resource('destinasi',App\Http\Controllers\API\DestinasiController::class);
+//INI
+// Route::resource('destinasi',App\Http\Controllers\API\DestinasiController::class);
+Route::get('destinasi',[DestinasiController::class, 'index']);
+Route::get('destinasi/{id}',[DestinasiController::class, 'show']);
 //or with (under this) code, works too!!
 // Route::get('destinasi',[DestinasiController::class, 'index']);
 Route::post('destinasi/store', [DestinasiController::class, 'store']);
+// Route::get('destinasi/{id}', [DestinasiController::class, 'show']);
+
+// Route::get('/destinasi/{id}', 'DestinasiController@show');
+
+//INI
 Route::put('destinasi/update/{id}', [DestinasiController::class, 'update']);
 
 // Route::prefix('/destinasi')->group(function () {

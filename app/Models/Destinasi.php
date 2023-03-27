@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Destinasi extends Model
 {
-    // use HasFactory;
+    use HasFactory;
 
     protected $table = 'destinasi';
     // protected $fillable = [

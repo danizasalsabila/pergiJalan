@@ -64,6 +64,8 @@ class DestinasiController extends Controller
         $tahun = $dt->format('y');
         $bulan = $dt->format('m');
 
+        // $destinasi =Destinasi::orderBy('id', 'desc')->get();
+
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
             'address' => $request->address,
@@ -92,10 +94,24 @@ class DestinasiController extends Controller
 
     /**
      * Display the specified resource.
+     * @return \Illuminate\Http\Response
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
+        $destinasi = Destinasi::where('id',$id)->first();
+        if($destinasi != null) {
+            return response ([
+                'status' => 'Data destinasi berhasil ditampilkan',
+                'data' => $destinasi
+            ], 200);
+        } else {
+            return response ([
+                'status' => 'failed',
+                'message' => 'destinasi tidak ditemukan'
+            ], 404);
+        }
+
     }
 
     /**
@@ -107,6 +123,7 @@ class DestinasiController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -120,7 +137,14 @@ class DestinasiController extends Controller
     {
         //
         $getDestinasi = Destinasi::where('id', $id)->first();
-
+        // $getDestinasi = Destinasi::find($id);
+        
+        if (!$getDestinasi) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
         $dt = new DateTime();
         $tahun = $dt->format('y');
         $bulan = $dt->format('m');
