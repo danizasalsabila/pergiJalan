@@ -19,3 +19,4 @@ class Destinasi extends Model
 
     // protected $hidden = [];
 }
+ 
