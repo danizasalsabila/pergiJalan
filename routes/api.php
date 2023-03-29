@@ -20,11 +20,11 @@ use App\Http\Controllers\API\DestinasiController;
 // });
 
 //INI
-// Route::get('destinasi',[DestinasiController::class, 'index']);
-Route::get('destinasi', function () {
-    $destinasi = DestinasiController::select('name_destinasi')->get();
-    return response()->json($destinasi);
-});
+Route::get('destinasi',[DestinasiController::class, 'index']);
+// Route::get('destinasi', function () {
+//     $destinasi = DestinasiController::select('name_destinasi')->get();
+//     return response()->json($destinasi);
+// });
 
 
 Route::get('destinasi/{id}',[DestinasiController::class, 'show']);
