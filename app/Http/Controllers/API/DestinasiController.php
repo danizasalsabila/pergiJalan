@@ -111,7 +111,6 @@ class DestinasiController extends Controller
                 'message' => 'destinasi tidak ditemukan'
             ], 404);
         }
-
     }
 
     /**

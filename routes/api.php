@@ -20,8 +20,13 @@ use App\Http\Controllers\API\DestinasiController;
 // });
 
 //INI
-// Route::resource('destinasi',App\Http\Controllers\API\DestinasiController::class);
-Route::get('destinasi',[DestinasiController::class, 'index']);
+// Route::get('destinasi',[DestinasiController::class, 'index']);
+Route::get('destinasi', function () {
+    $destinasi = DestinasiController::select('name_destinasi')->get();
+    return response()->json($destinasi);
+});
+
+
 Route::get('destinasi/{id}',[DestinasiController::class, 'show']);
 //or with (under this) code, works too!!
 // Route::get('destinasi',[DestinasiController::class, 'index']);
