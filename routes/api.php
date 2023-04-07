@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\DestinasiController;
 use App\Http\Controllers\API\TicketController;
+use App\Http\Controllers\API\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,14 @@ Route::get('ticket', function () {
 Route::post('ticket', [TicketController::class, 'store']);
 Route::get('ticket/{id}', [TicketController::class, 'show']);
 Route::delete('ticket/destroy/{id}', [TicketController::class, 'destroy']);
+
+
+//REVIEW
+Route::get('review', function () {
+    return \App\Models\Review::with('destinasi')->get();
+});
+Route::post('review', [ReviewController::class, 'store']);
+Route::get('review/{id}', [ReviewController::class, 'show']);
 
 
 
