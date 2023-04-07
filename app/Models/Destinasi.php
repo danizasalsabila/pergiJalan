@@ -10,12 +10,7 @@ class Destinasi extends Model
     use HasFactory;
 
     protected $table = 'destinasi';
-    // protected $fillable = [
-    //     'name_destinasi',
-    //     'address',
-    //     'city',
-    //     'category'
-    // ];
 
-    // protected $hidden = [];
+
 }
+

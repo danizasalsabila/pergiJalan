@@ -3,45 +3,34 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Destinasi;
 use DateTime;
-use App\Helpers\ApiFormatter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 
 class DestinasiController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return \Illuminate\Http\Response
-     * 
+     *  @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //Destinasi
-        // $data = Destinasi::all();
-        // if($data) {
-        //     return ApiFormatter::createApi(200, 'Success', $data);
-        // } else {
-        //     return ApiFormatter::createApi(400, 'Failed');
-        // }
-            $destinasi = DB::table('destinasi')->orderBy('id','desc')->get();
+        $destinasi = DB::table('destinasi')->orderBy('id','desc')->get();
 
-            if($destinasi != null) {
-                return response ([
-                    'status' => 'Data destinasi berhasil ditampilkan',
-                    'code' => 200,
-                    'data' => $destinasi
-                ], 200);
-            } else {
-                return response ([
-                    'status' => 'failed',
-                    'code' => 404,
-                    'message' => 'Data destinasi tidak ditemukan'
-                ], 404);
-            }
-
+        if($destinasi != null) {
+            return response ([
+                'status' => 'Data destinasi berhasil ditampilkan',
+                'code' => 200,
+                'data' => $destinasi
+            ], 200);
+        } else {
+            return response ([
+                'status' => 'failed',
+                'code' => 404,
+                'message' => 'Data destinasi tidak ditemukan'
+            ], 404);
+        }
     }
 
     /**
@@ -68,10 +57,25 @@ class DestinasiController extends Controller
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
+            'description' => $request->address,
             'address' => $request->address,
             'city' => $request->city,
             'category' => $request->category,
-            'created_at' => $dt
+            'destination_picture' => $request->destination_picture,
+            'contact' => $request->contact,
+            'hobby' => $request->hobby,
+            'minutes_spend' => $request->minutes_spend,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'url_map' => $request->url_map,
+            'rec_weather' => $request->rec_weather,
+            'rating' => $request->rating,
+            'open-hour' => $request->open_hour,
+            'closed-hour' => $request->closed_hour,
+            'created_at' => $dt,
+            'fasility' => $request->fasility,
+            'security' => $request->security,
+
 
         ];
         
@@ -99,7 +103,7 @@ class DestinasiController extends Controller
     public function show($id)
     {
         //
-        $destinasi = Destinasi::where('id',$id)->first();
+        $destinasi = Destinasi::where('id', $id)->first();
         if($destinasi != null) {
             return response ([
                 'status' => 'Data destinasi berhasil ditampilkan',
@@ -115,14 +119,10 @@ class DestinasiController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-     
-    public function edit($id)
+    public function edit(string $id)
     {
         //
-
     }
 
     /**
@@ -130,7 +130,6 @@ class DestinasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-
      */
     public function update(Request $request, $id)
     {
@@ -139,7 +138,7 @@ class DestinasiController extends Controller
         // $getDestinasi = Destinasi::find($id);
         
         if (!$getDestinasi) {
-            return response()->json([
+            return response ([
                 'status' => 'failed',
                 'message' => 'Data tidak ditemukan'
             ], 404);
@@ -150,10 +149,24 @@ class DestinasiController extends Controller
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
+            'description' => $request->address,
             'address' => $request->address,
             'city' => $request->city,
             'category' => $request->category,
-            'updated_at' => $dt
+            'destination_picture' => $request->destination_picture,
+            'contact' => $request->contact,
+            'hobby' => $request->hobby,
+            'minutes_spend' => $request->minutes_spend,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'url_map' => $request->url_map,
+            'rec_weather' => $request->rec_weather,
+            'rating' => $request->rating,
+            'open-hour' => $request->open_hour,
+            'closed-hour' => $request->closed_hour,
+            'created_at' => $dt,
+            'fasility' => $request->fasility,
+            'security' => $request->security,
         ];
 
         $id = $getDestinasi->id;
@@ -175,9 +188,92 @@ class DestinasiController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @return \Illuminate\Http\Response
      */
     public function destroy(string $id)
     {
-        //
+        $getDestinasi = Destinasi::where('id', $id)->first();
+        $destinasi = Destinasi::where('id', $id)->delete();
+        
+        if($destinasi){
+            return response([
+                'status' => 'success',
+                'message' => 'Data berhasil dihapus'
+            ], 200);
+        }else{
+            return response([
+                'status' => 'failed',
+                'message' => 'Data gagal dihapus'
+            ], 404);
+        }
+
+    }
+
+
+    public function search(Request $request) {
+        $searchQuery = $request->q;
+        $destinasi = Destinasi::where('name_destinasi','LIKE',"%".$searchQuery."%")
+                            ->orWhere('city','LIKE',"%".$searchQuery."%")
+                            ->orWhere('category','LIKE',"%".$searchQuery."%")
+                            ->get();
+
+                            if($destinasi != null){
+                                return response([
+                                    'status' => 'success',
+                                    'message' => 'Kesenian yang dicari Berhasil Ditampilkan',
+                                    'data' => $destinasi
+                                ], 200);
+                            } else {
+                                return response ([
+                                    'status' => 'failed',
+                                    'message' => 'Kesenian yang dicari gagal tidak ditemukan'
+                                ], 404);
+                            }
+    }
+
+    /**
+     * Display the specified resource.
+     * @return \Illuminate\Http\Response
+     */
+    public function city(Request $request) {
+        $searchQuery = $request->q;
+
+        $destinasi = Destinasi::where('city','LIKE',"%".$searchQuery."%")->get();
+
+        if($destinasi != null){
+            return response([
+                'status' => 'success',
+                'message' => 'Destinasi berdasarkan kota Berhasil Ditampilkan',
+                'data' => $destinasi
+            ], 200);
+        } else {
+            return response ([
+                'status' => 'failed',
+                'message' => 'Destinasi wisata kota gagal ditemukan!'
+            ], 404);
+        }
+    }
+
+        /**
+     * Display the specified resource.
+     * @return \Illuminate\Http\Response
+     */
+    public function category(Request $request) {
+        $searchQuery = $request->q;
+
+        $destinasi = Destinasi::where('category','LIKE',"%".$searchQuery."%")->get();
+
+        if($destinasi != null){
+            return response([
+                'status' => 'success',
+                'message' => 'Destinasi berdasarkan kategori Berhasil Ditampilkan',
+                'data' => $destinasi
+            ], 200);
+        } else {
+            return response ([
+                'status' => 'failed',
+                'message' => 'Destinasi wisata kategori gagal ditemukan!'
+            ], 404);
+        }
     }
 }
