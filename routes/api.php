@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\DestinasiController;
+use App\Http\Controllers\API\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,18 @@ Route::delete('destinasi/destroy/{id}', [DestinasiController::class, 'destroy'])
 Route::get('/search/destinasi', 'App\Http\Controllers\API\DestinasiController@search');
 Route::get('/city/destinasi', 'App\Http\Controllers\API\DestinasiController@city');
 Route::get('/category/destinasi', 'App\Http\Controllers\API\DestinasiController@category');
+
+
+//TICKET
+Route::get('ticket', function () {
+    return \App\Models\Ticket::with('destinasi')->get();
+});
+Route::post('ticket', [TicketController::class, 'store']);
+Route::get('ticket/{id}', [TicketController::class, 'show']);
+Route::delete('ticket/destroy/{id}', [TicketController::class, 'destroy']);
+
+
+
 
 
 
