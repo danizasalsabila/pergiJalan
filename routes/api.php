@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\DestinasiController;
 use App\Http\Controllers\API\TicketController;
 use App\Http\Controllers\API\ReviewController;
+use App\Http\Controllers\API\AuthControllerUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,18 @@ Route::post('review', [ReviewController::class, 'store']);
 Route::get('review/{id}', [ReviewController::class, 'show']);
 
 
+
+//USER AUTHENTICATION
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/logout', [AuthControllerUser::class, 'logout']);
+});
+Route::post('register', [AuthControllerUser::class, 'register']);
+Route::post('login', [AuthControllerUser::class, 'login']);
+Route::get('user', [AuthControllerUser::class, 'index']);
+Route::get('/email/user', 'App\Http\Controllers\API\AuthControllerUser@email');
 
 
 
