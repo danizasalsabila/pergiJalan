@@ -49,7 +49,7 @@ class AuthControllerUser extends Controller
             } else {
                 return response()->json([
                     'status' => false,
-                    'errors' => $errors
+                    'error' => $errors
                 ], 400);
             }
         }
