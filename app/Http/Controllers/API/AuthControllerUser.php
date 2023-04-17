@@ -62,7 +62,7 @@ class AuthControllerUser extends Controller
         $success['name'] = $user->name;
 
         return response()->json([
-            'success' => true,
+            'status' => true,
             'message' => 'Register sukses',
             'data' => $success
         ]);
