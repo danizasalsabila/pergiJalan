@@ -179,7 +179,7 @@ class AuthControllerUser extends Controller
         } else {
             return response ([
                 'status' => false,
-                'message' => 'user tidak ditemukan'
+                'message' => 'User tidak ditemukan'
             ], 404);
         }
     }
