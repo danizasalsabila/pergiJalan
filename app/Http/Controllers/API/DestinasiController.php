@@ -75,12 +75,12 @@ class DestinasiController extends Controller
             'created_at' => $dt,
             'fasility' => $request->fasility,
             'security' => $request->security,
-
-
         ];
         
 
-        $createDestinasi = DB::table('destinasi')->insert($requestDestinasi);
+        // $createDestinasi = DB::table('destinasi')->insert($requestDestinasi);
+        $createDestinasi = DB::table('destinasi')->insertGetId($requestDestinasi);
+
 
         if($createDestinasi != null){
             return response([
