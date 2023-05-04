@@ -86,6 +86,7 @@ class DestinasiController extends Controller
             return response([
                 'status' => 'success',
                 'message' => 'Destinasi Berhasil Ditambahkan',
+                'id' => $createDestinasi,
                 'data' => $requestDestinasi
             ], 200);
         } else {
