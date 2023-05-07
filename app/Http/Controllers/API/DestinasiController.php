@@ -57,7 +57,7 @@ class DestinasiController extends Controller
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
-            'description' => $request->address,
+            'description' => $request->description,
             'address' => $request->address,
             'city' => $request->city,
             'category' => $request->category,
@@ -150,7 +150,7 @@ class DestinasiController extends Controller
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
-            'description' => $request->address,
+            'description' => $request->description,
             'address' => $request->address,
             'city' => $request->city,
             'category' => $request->category,
