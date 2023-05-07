@@ -168,6 +168,7 @@ class DestinasiController extends Controller
             'created_at' => $dt,
             'fasility' => $request->fasility,
             'security' => $request->security,
+            'updated_at' => $dt
         ];
 
         $id = $getDestinasi->id;
