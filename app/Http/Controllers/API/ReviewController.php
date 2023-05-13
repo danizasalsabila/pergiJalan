@@ -3,12 +3,51 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Destinasi;
 use App\Models\Review;
 use DateTime;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    //to get rating average by id destinasi
+    public function getRating($id)
+    {
+        $idDestinasi = Destinasi::find($id);
+        if (!$idDestinasi) {
+            return response()->json([
+                'message' => 'Destinasi tidak ditemukan'
+            ], 404);
+        }
+
+        $ratingCount = $idDestinasi->ratings->count();
+        if ($ratingCount > 0) {
+            $totalRating = $idDestinasi->ratings->sum('rating');
+            $avgRating = $totalRating / $ratingCount;
+        } else {
+            $avgRating = 0;
+        }
+     
+        if ($ratingCount != null) {
+            return response([
+                'status' => true,
+                'message' => 'Penilaian berhasil ditampilkan',
+                'id_destinasi' => $idDestinasi->id,
+                'rating' => $avgRating
+            ], 200);
+        } else if ($ratingCount == null) {
+            return response([
+                'status' => false,
+                'message' => 'Belum terdapat penilaian',
+                // 'id_destinasi' => $idDestinasi->id,
+            ], 202);
+        }else {
+            return response([
+                'status' => false,
+                'message' => 'Failed'
+            ], 400);
+        }
+    }
     /**
      * Display a listing of the resource.
      */
