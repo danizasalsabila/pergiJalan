@@ -33,7 +33,7 @@ class ReviewController extends Controller
                 'status' => true,
                 'message' => 'Penilaian berhasil ditampilkan',
                 'id_destinasi' => $idDestinasi->id,
-                'rating' => $avgRating
+                'rating' => number_format($avgRating, 1)
             ], 200);
         } else if ($ratingCount == null) {
             return response([
