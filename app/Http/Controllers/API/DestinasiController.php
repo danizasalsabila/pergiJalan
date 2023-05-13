@@ -221,13 +221,13 @@ class DestinasiController extends Controller
         if ($destinasi->count() > 0) {
             return response([
                 'status' => 'success',
-                'message' => 'Kesenian yang dicari Berhasil Ditampilkan',
+                'message' => 'Destinasi yang dicari Berhasil Ditampilkan',
                 'data' => $destinasi
             ], 200);
         } else {
             return response([
                 'status' => 'failed',
-                'message' => 'Kesenian yang dicari gagal tidak ditemukan'
+                'message' => 'Destinasi yang dicari gagal tidak ditemukan'
             ], 404);
         }
     }
