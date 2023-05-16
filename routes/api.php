@@ -7,6 +7,7 @@ use App\Http\Controllers\API\DestinasiController;
 use App\Http\Controllers\API\TicketController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\AuthControllerUser;
+use App\Http\Controllers\API\AuthControllerOwnerBusiness;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +71,12 @@ Route::get('user', [AuthControllerUser::class, 'index']);
 Route::get('user/{id}', [AuthControllerUser::class, 'show']);
 Route::get('/email/user', 'App\Http\Controllers\API\AuthControllerUser@email');
 
-
+//OWNER BUSINESS USER AUTHENTICATION
+Route::post('owner/register', [AuthControllerOwnerBusiness::class, 'register']);
+Route::post('owner/login', [AuthControllerOwnerBusiness::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('owner/logout', [AuthControllerOwnerBusiness::class, 'logout']);
+});
 
 
 
