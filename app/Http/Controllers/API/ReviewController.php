@@ -125,7 +125,7 @@ class ReviewController extends Controller
     public function show(string $id)
     {
         //
-        $review = Review::where('id_destinasi', $id)->orderBy('id', 'desc')->get();
+        $review = Review::with('user')->where('id_destinasi', $id)->orderBy('id', 'desc')->get();
         if($review != null) {
             return response ([
                 'status' => 'Review berhasil ditampilkan',
