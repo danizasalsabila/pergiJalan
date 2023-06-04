@@ -51,6 +51,7 @@ Route::put('ticket/update/{id}', [TicketController::class, 'update']);
 
 //REVIEW
 Route::get('/rating/{id}', [ReviewController::class, 'getRating']);
+Route::get('/rating/byowner/{id_owner}', [ReviewController::class, 'getRatingByIdOwner']);
 Route::get('review', function () {
     return \App\Models\Review::with('destinasi')->get();
 });

@@ -48,6 +48,31 @@ class ReviewController extends Controller
             ], 400);
         }
     }
+
+
+    public function getRatingByIdOwner($id)
+    {
+        $reviews = Review::whereHas('destinasi', function ($query) use ($id) {
+            $query->where('id_owner', $id);
+        })->get();
+        
+        if ($reviews->isEmpty()) {
+            return response()->json([
+                'message' => 'Belum terdapat penilaian',
+            ], 202);
+        }
+    
+        $ratingCount = $reviews->count();
+        $totalRating = $reviews->sum('rating');
+        $avgRating = $totalRating / $ratingCount;
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Penilaian berhasil ditampilkan',
+            'id_owner' => $id,
+            'rating' => doubleval($avgRating)
+        ], 200);
+    }
     /**
      * Display a listing of the resource.
      */
