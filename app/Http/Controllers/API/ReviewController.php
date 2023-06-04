@@ -90,6 +90,7 @@ class ReviewController extends Controller
         
         $request->validate([
             'id_destinasi' => 'required|exists:destinasi,id',
+            'id_user' => 'required|exists:user,id',
             'review' =>'nullable|string',
             'rating' =>'required|min:1|max:5',
         ]);
@@ -97,6 +98,7 @@ class ReviewController extends Controller
     
         $review = new Review;
         $review->id_destinasi = $request->input('id_destinasi');
+        $review->id_user = $request->input('id_user');
         $review->review = $request->input('review');
         $review->rating = $request->input('rating');
         $review->created_at = $dt;
