@@ -58,6 +58,7 @@ class DestinasiController extends Controller
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
             'description' => $request->description,
+            'id_owner' => $request->id_owner,
             'address' => $request->address,
             'city' => $request->city,
             'category' => $request->category,
@@ -119,7 +120,27 @@ class DestinasiController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+          * @return \Illuminate\Http\Response
      */
+    public function showByIdOwner($id)
+    {
+        //
+        $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();;
+        if ($destinasi != null) {
+            return response([
+                'status' => 'Destinasi by owner berhasil ditampilkan',
+                'data' => $destinasi
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'destinasi tidak ditemukan'
+            ], 404);
+        }
+    }
+
+
+
     public function edit(string $id)
     {
         //
@@ -163,7 +184,6 @@ class DestinasiController extends Controller
             'rec_weather' => $request->rec_weather,
             'open_hour' => $request->open_hour,
             'closed_hour' => $request->closed_hour,
-            'created_at' => $dt,
             'fasility' => $request->fasility,
             'security' => $request->security,
             'updated_at' => $dt

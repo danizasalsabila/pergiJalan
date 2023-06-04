@@ -31,6 +31,7 @@ Route::post('destinasi/store', [DestinasiController::class, 'store']);
 Route::get('destinasi/{id}', [DestinasiController::class, 'show']);
 Route::put('destinasi/update/{id}', [DestinasiController::class, 'update']);
 Route::delete('destinasi/destroy/{id}', [DestinasiController::class, 'destroy']);
+Route::get('destinasi/byowner/{id_owner}', [DestinasiController::class, 'showByIdOwner']);
 //search Destinasi
 // Route::get('destinasi/search/{name_destinasi}', [DestinasiController::class, 'search']);
 Route::get('/search/destinasi', 'App\Http\Controllers\API\DestinasiController@search');
