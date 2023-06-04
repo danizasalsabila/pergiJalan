@@ -126,7 +126,7 @@ class DestinasiController extends Controller
     {
         //
         $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();;
-        if ($destinasi != null) {
+        if ($destinasi->count() >0) {
             return response([
                 'status' => 'Destinasi by owner berhasil ditampilkan',
                 'data' => $destinasi
