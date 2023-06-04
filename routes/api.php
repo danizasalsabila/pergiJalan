@@ -55,7 +55,10 @@ Route::get('review', function () {
     return \App\Models\Review::with('destinasi')->get();
 });
 Route::post('review', [ReviewController::class, 'store']);
-Route::get('review/{id}', [ReviewController::class, 'show']);
+// Route::get('review/{id}', [ReviewController::class, 'show']);
+Route::get('review/{id}', function () {
+    return \App\Models\Review::with('user')->get();
+});
 
 
 
