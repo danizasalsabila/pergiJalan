@@ -67,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::post('register', [AuthControllerUser::class, 'register']);
 Route::post('login', [AuthControllerUser::class, 'login']);
+Route::put('user/{id}', [AuthControllerUser::class, 'update']);
 Route::get('user', [AuthControllerUser::class, 'index']);
 Route::get('user/{id}', [AuthControllerUser::class, 'show']);
 Route::get('/email/user', 'App\Http\Controllers\API\AuthControllerUser@email');
@@ -78,6 +79,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('owner/logout', [AuthControllerOwnerBusiness::class, 'logout']);
 });
 Route::get('owner/{id}', [AuthControllerOwnerBusiness::class, 'show']);
+Route::put('owner/{id}', [AuthControllerOwnerBusiness::class, 'update']);
 Route::get('owner', [AuthControllerOwnerBusiness::class, 'index']);
 
 
