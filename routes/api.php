@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\DestinasiController;
 use App\Http\Controllers\API\TicketController;
+use App\Http\Controllers\API\ETicketController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\AuthControllerUser;
 use App\Http\Controllers\API\AuthControllerOwnerBusiness;
@@ -47,6 +48,17 @@ Route::post('ticket', [TicketController::class, 'store']);
 Route::get('ticket/{id}', [TicketController::class, 'show']);
 Route::delete('ticket/destroy/{id}', [TicketController::class, 'destroy']);
 Route::put('ticket/update/{id}', [TicketController::class, 'update']);
+Route::get('ticketsold', [TicketController::class, 'getTicketSoldByDestination']);
+
+//E-TICKET
+Route::get('eticket', [ETicketController::class, 'index']);
+Route::get('eticket/byowner/{id}', [ETicketController::class, 'showByIdOwner']);
+Route::get('eticket/byuser/{id}', [ETicketController::class, 'showByIdUser']);
+Route::get('eticket/byticket/{id}', [ETicketController::class, 'showByIdTicket']);
+Route::post('eticket', [ETicketController::class, 'store']);
+Route::get('eticket/byowner/year/{id_owner}', [ETicketController::class, 'getETicketByYearOwner']);
+Route::get('eticket/byowner/month/{id_owner}', [ETicketController::class, 'getETicketByMonthOwner']);
+Route::get('eticket/byowner/week/{id_owner}', [ETicketController::class, 'getETicketByWeekOwner']);
 
 
 //REVIEW
