@@ -17,7 +17,7 @@ class ETicketController extends Controller
     public function index()
     {
         $eticket = ETicket::with('ticket')->get();
-        if ($eticket ->count() >0) {
+        if ($eticket->count() > 0) {
             return response([
                 'status' => 'success',
                 'message' => 'E-Ticket Berhasil ditampilkan',
@@ -145,6 +145,12 @@ class ETicketController extends Controller
         $eticket->virtual_account = $randomId;
         $eticket->save();
 
+        // Mendapatkan harga tiket dari tabel 'ticket' berdasarkan 'id_ticket'
+        $ticket = Ticket::findOrFail($request->input('id_ticket'));
+        $eticket->price = $ticket->price;
+
+        $eticket->save();
+
         //to reduce the amount of stock on ticket table with id_ticket request
         $ticket = Ticket::findOrFail($request->input('id_ticket'));
         $ticket->decrement('stock');
@@ -224,7 +230,7 @@ class ETicketController extends Controller
     }
 
 
-        /**
+    /**
      * Store a newly created resource in storage.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
