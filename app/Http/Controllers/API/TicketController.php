@@ -62,6 +62,30 @@ class TicketController extends Controller
         return response()->json(['ticket_sold' => $ticketSold], 200);
     }
 
+    public function getTicketSoldByIdOwner(Request $request)
+    {
+        // Validasi inputan jika diperlukan
+        $request->validate([
+            'id_owner' => 'required|exists:owner_business,id'
+        ]);
+
+        $ownerId = $request->input('id_owner');
+
+        // Mengecek apakah terdapat E-Ticket dengan id_destinasi yang diberikan
+        $eticketExists = ETicket::where('id_owner', $ownerId)->exists();
+
+        if (!$eticketExists) {
+            return response()->json(['message' => 'Tidak terdapat pembelian tiket'], 404);
+        }
+
+        // Menghitung jumlah tiket terjual berdasarkan ID destinasi
+        $ticketSold = ETicket::whereHas('ticket', function ($query) use ($ownerId) {
+            $query->where('id_owner', $ownerId);
+        })->count();
+
+        return response()->json(['ticket_sold' => $ticketSold], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
