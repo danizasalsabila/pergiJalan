@@ -262,11 +262,26 @@ class ETicketController extends Controller
 
     /**
      * Display the specified resource.
+     * @return \Illuminate\Http\Response
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
+        // $ticket = Ticket::where('id_destinasi', $id)->get();
+        $eticket = ETicket::where('id', $id)->get();
+        if ($eticket ->count() > 0) {
+            return response([
+                'status' => 'ETicket berhasil ditampilkan',
+                'data' => $eticket
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'ETicket tidak ditemukan'
+            ], 404);
+        }
     }
+
 
     /**
      * Show the form for editing the specified resource.

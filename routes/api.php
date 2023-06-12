@@ -54,6 +54,8 @@ Route::get('ticketsold/owner', [TicketController::class, 'getTicketSoldByIdOwner
 
 //E-TICKET
 Route::get('eticket', [ETicketController::class, 'index']);
+Route::get('eticket/{id}', [ETicketController::class, 'show']);
+
 Route::get('eticket/byowner/{id}', [ETicketController::class, 'showByIdOwner']);
 Route::get('eticket/byuser/{id}', [ETicketController::class, 'showByIdUser']);
 Route::get('eticket/byticket/{id}', [ETicketController::class, 'showByIdTicket']);
