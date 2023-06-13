@@ -19,7 +19,7 @@ class ETicket extends Model
 
     public function destinasi()
     {
-        return $this->belongsTo(Destinasi::class, 'id_destinasi')->select('id', 'name_destinasi', 'address', 'contact', 'open-hour', 'closed-hour');
+        return $this->belongsTo(Destinasi::class, 'id_destinasi')->select('id', 'name_destinasi', 'address', 'contact', 'open_hour', 'closed_hour');
     }
 
     public function user()
