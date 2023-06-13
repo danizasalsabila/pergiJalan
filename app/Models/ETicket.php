@@ -17,6 +17,11 @@ class ETicket extends Model
         return $this->belongsTo(Ticket::class, 'id_ticket')->select('id', 'price',);
     }
 
+    public function destinasi()
+    {
+        return $this->belongsTo(Destinasi::class, 'id_destinasi')->select('id', 'name_destinasi', 'address', 'contact', 'open-hour', 'closed-hour');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user')->select('id', 'name','email');
