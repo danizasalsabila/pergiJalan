@@ -145,7 +145,7 @@ class TicketController extends Controller
         //
         // $ticket = Ticket::where('id_destinasi', $id)->get();
         $ticket = Ticket::where('id_destinasi', $id)->get();
-        if ($ticket != null) {
+        if ($ticket->count() > 0) {
             return response([
                 'status' => 'Ticket berhasil ditampilkan',
                 'data' => $ticket
