@@ -46,7 +46,7 @@ class ETicketController extends Controller
     public function showByIdOwner($id)
     {
         //
-        $eticket = ETicket::where('id_owner', $id)->orderBy('id', 'desc')->get();
+        $eticket = ETicket::with('destinasi')->where('id_owner', $id)->orderBy('id', 'desc')->get();
         ;
         if ($eticket->count() > 0) {
             return response([
@@ -90,7 +90,7 @@ class ETicketController extends Controller
     public function showByIdTicket($id)
     {
         //
-        $eticket = ETicket::where('id_ticket', $id)->orderBy('id', 'desc')->get();
+        $eticket = ETicket::with('destinasi')->where('id_ticket', $id)->orderBy('id', 'desc')->get();
         ;
         if ($eticket->count() > 0) {
             return response([
