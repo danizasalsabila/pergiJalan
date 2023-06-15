@@ -157,6 +157,40 @@ class TicketController extends Controller
             ], 404);
         }
     }
+
+    
+    /**
+     * Display the specified resource.
+     *  @return \Illuminate\Http\Response
+     */
+    public function showByMostSoldTicket(Request $request)
+    {
+        //
+        $request->validate([
+            'id_owner' => 'required|exists:owner_business,id'
+        ]);
+
+        $ownerId = $request->input('id_owner');
+
+        $ticket = Ticket::with('destinasi')->join('destinasi', 'ticket.id_destinasi', '=', 'destinasi.id')
+            ->select('ticket.*')
+            ->where('destinasi.id_owner', $ownerId)
+            ->orderByDesc('ticket.ticket_sold')
+            ->get();
+
+        if ($ticket->count() > 0) {
+            return response([
+                'status' => 'Ticket berdasarkan penjualan terbanyak berhasil ditampilkan',
+                'data' => $ticket
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'Ticket berdasarkan penjualan terbanyak tidak ditemukan'
+            ], 404);
+        }
+    }
+    
     /**
      * Show the form for editing the specified resource.
      */

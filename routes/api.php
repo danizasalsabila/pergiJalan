@@ -50,6 +50,8 @@ Route::delete('ticket/destroy/{id}', [TicketController::class, 'destroy']);
 Route::put('ticket/update/{id}', [TicketController::class, 'update']);
 Route::get('ticketsold', [TicketController::class, 'getTicketSoldByDestination']);
 Route::get('ticketsold/owner', [TicketController::class, 'getTicketSoldByIdOwner']);
+Route::get('ticket/mostsales/owner', [TicketController::class, 'showByMostSoldTicket']);
+
 
 
 //E-TICKET

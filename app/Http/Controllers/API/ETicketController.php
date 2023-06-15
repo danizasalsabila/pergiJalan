@@ -69,7 +69,7 @@ class ETicketController extends Controller
     {
         //
         $eticket = ETicket::with('destinasi')->where('id_user', $id)->orderBy('id', 'desc')->get();
-        ;
+        
         if ($eticket->count() > 0) {
             return response([
                 'status' => 'E-Ticket berdasarkan id user berhasil ditampilkan',
