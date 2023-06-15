@@ -120,13 +120,14 @@ class DestinasiController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-          * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function showByIdOwner($id)
     {
         //
-        $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();;
-        if ($destinasi->count() >0) {
+        $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();
+        ;
+        if ($destinasi->count() > 0) {
             return response([
                 'status' => 'Destinasi by owner berhasil ditampilkan',
                 'data' => $destinasi
@@ -233,6 +234,12 @@ class DestinasiController extends Controller
     public function search(Request $request)
     {
         $searchQuery = $request->q;
+        if (empty($searchQuery)) {
+            return response([
+                'status' => 'failed',
+                'message' => 'Parameter pencarian tidak boleh kosong'
+            ], 400);
+        }
         $destinasi = Destinasi::where('name_destinasi', 'LIKE', "%" . $searchQuery . "%")
             ->orWhere('city', 'LIKE', "%" . $searchQuery . "%")
             ->orWhere('category', 'LIKE', "%" . $searchQuery . "%")
