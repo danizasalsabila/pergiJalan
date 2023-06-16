@@ -185,7 +185,7 @@ class ETicketController extends Controller
         // $id_owner = $request->id_owner;
         $year = $request->input('year');
 
-        $eticket = ETicket::where('id_owner', $id_owner)->whereYear('date_book', $year)->get();
+        $eticket = ETicket::with('destinasi')->where('id_owner', $id_owner)->whereYear('date_book', $year)->get();
 
         if ($eticket->count() > 0) {
             return response([
