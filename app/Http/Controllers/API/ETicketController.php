@@ -213,7 +213,7 @@ class ETicketController extends Controller
         $year = $request->input('year');
         $month = $request->input('month');
 
-        $eticket = ETicket::where('id_owner', $id_owner)->whereYear('date_book', $year)->whereMonth('date_book', $month)->get();
+        $eticket = ETicket::with('destinasi')->where('id_owner', $id_owner)->whereYear('date_book', $year)->whereMonth('date_book', $month)->get();
 
         if ($eticket->count() > 0) {
             return response([
@@ -244,7 +244,7 @@ class ETicketController extends Controller
         $date = Carbon::parse($request->input('date'))->startOfDay();
         $endDate = $date->copy()->addDays(7)->endOfDay();
 
-        $eticket = ETicket::where('id_owner', $id_owner)->whereBetween('date_book', [$date, $endDate])->get();
+        $eticket = ETicket::with('destinasi')->where('id_owner', $id_owner)->whereBetween('date_book', [$date, $endDate])->get();
 
         if ($eticket->count() > 0) {
             return response([
