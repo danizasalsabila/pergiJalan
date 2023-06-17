@@ -238,18 +238,19 @@ class ETicketController extends Controller
      */
     public function getETicketByWeekOwner(Request $request, $id_owner)
     {
-        // $id_owner = $request->id_owner;
-        // $date = $request->input('date');
-
         $date = Carbon::parse($request->input('date'))->startOfDay();
-        $endDate = $date->copy()->addDays(7)->endOfDay();
+        $startDate = $date->copy()->subDays(7)->startOfDay();
+        
+        $eticket = ETicket::with('destinasi')
+        ->where('id_owner', $id_owner)
+        ->whereBetween('date_book', [$startDate, $date])
+        ->get();
 
-        $eticket = ETicket::with('destinasi')->where('id_owner', $id_owner)->whereBetween('date_book', [$date, $endDate])->get();
 
         if ($eticket->count() > 0) {
             return response([
                 'status' => 'success',
-                'message' => 'E-Ticket mulai dari tanggal ' . $date . ' hingga ' . $endDate . ' Berhasil Ditampilkan',
+                'message' => 'E-Ticket mulai dari tanggal 7 hari sebelum ' . $date . 'Berhasil Ditampilkan',
                 'data' => $eticket
             ], 200);
         } else {

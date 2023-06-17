@@ -118,7 +118,7 @@ class TicketController extends Controller
     public function getTicketSoldByDestinationInWeek(Request $request)
     {
         $date = Carbon::parse($request->input('date'))->startOfDay();
-        $endDate = $date->copy()->addDays(7)->endOfDay();
+        $startDate = $date->copy()->subDays(7)->startOfDay();
 
 
         $request->validate([
@@ -135,7 +135,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Tidak terdapat pembelian tiket'], 404);
         }
         $ticketSold = ETicket::where('id_destinasi', $destinationId)
-        ->whereBetween('date_book', [$date, $endDate])
+        ->whereBetween('date_book', [$startDate, $date])
         ->count();
 
         return response()->json(['ticket_sold' => $ticketSold], 200);
