@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\ETicket;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,6 +59,84 @@ class TicketController extends Controller
         $ticketSold = ETicket::whereHas('ticket', function ($query) use ($destinationId) {
             $query->where('id_destinasi', $destinationId);
         })->count();
+
+        return response()->json(['ticket_sold' => $ticketSold], 200);
+    }
+
+    public function getTicketSoldByDestinationInMonth(Request $request)
+    {
+        $year = $request->input('year');
+        $month = $request->input('month');
+        // Validasi inputan jika diperlukan
+
+        $request->validate([
+            'id_destinasi' => 'required|exists:destinasi,id'
+        ]);
+
+        $destinationId = $request->input('id_destinasi');
+
+        // Mengecek apakah terdapat E-Ticket dengan id_destinasi yang diberikan
+        $eticketExists = ETicket::where('id_destinasi', $destinationId)->exists();
+        
+
+        if (!$eticketExists) {
+            return response()->json(['message' => 'Tidak terdapat pembelian tiket'], 404);
+        }
+        $ticketSold = ETicket::where('id_destinasi', $destinationId)
+        ->whereYear('date_book', $year)
+        ->whereMonth('date_book', $month)
+        ->count();
+
+        return response()->json(['ticket_sold' => $ticketSold], 200);
+    }
+
+    public function getTicketSoldByDestinationInYear(Request $request)
+    {
+        $year = $request->input('year');
+
+
+        $request->validate([
+            'id_destinasi' => 'required|exists:destinasi,id'
+        ]);
+
+        $destinationId = $request->input('id_destinasi');
+
+        // Mengecek apakah terdapat E-Ticket dengan id_destinasi yang diberikan
+        $eticketExists = ETicket::where('id_destinasi', $destinationId)->exists();
+        
+
+        if (!$eticketExists) {
+            return response()->json(['message' => 'Tidak terdapat pembelian tiket'], 404);
+        }
+        $ticketSold = ETicket::where('id_destinasi', $destinationId)
+        ->whereYear('date_book', $year)
+        ->count();
+
+        return response()->json(['ticket_sold' => $ticketSold], 200);
+    }
+
+    public function getTicketSoldByDestinationInWeek(Request $request)
+    {
+        $date = Carbon::parse($request->input('date'))->startOfDay();
+        $endDate = $date->copy()->addDays(7)->endOfDay();
+
+
+        $request->validate([
+            'id_destinasi' => 'required|exists:destinasi,id'
+        ]);
+
+        $destinationId = $request->input('id_destinasi');
+
+        // Mengecek apakah terdapat E-Ticket dengan id_destinasi yang diberikan
+        $eticketExists = ETicket::where('id_destinasi', $destinationId)->exists();
+        
+
+        if (!$eticketExists) {
+            return response()->json(['message' => 'Tidak terdapat pembelian tiket'], 404);
+        }
+        $ticketSold = ETicket::where('id_destinasi', $destinationId)
+        ->whereBetween('date_book', [$date, $endDate])
+        ->count();
 
         return response()->json(['ticket_sold' => $ticketSold], 200);
     }

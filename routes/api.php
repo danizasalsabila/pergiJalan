@@ -49,6 +49,9 @@ Route::get('ticket/{id}', [TicketController::class, 'show']);
 Route::delete('ticket/destroy/{id}', [TicketController::class, 'destroy']);
 Route::put('ticket/update/{id}', [TicketController::class, 'update']);
 Route::get('ticketsold', [TicketController::class, 'getTicketSoldByDestination']);
+Route::get('ticketsold/ownerinmonth', [TicketController::class, 'getTicketSoldByDestinationInMonth']);
+Route::get('ticketsold/ownerinyear', [TicketController::class, 'getTicketSoldByDestinationInYear']);
+Route::get('ticketsold/ownerinweek', [TicketController::class, 'getTicketSoldByDestinationInWeek']);
 Route::get('ticketsold/owner', [TicketController::class, 'getTicketSoldByIdOwner']);
 Route::get('ticket/mostsales/owner', [TicketController::class, 'showByMostSoldTicket']);
 
