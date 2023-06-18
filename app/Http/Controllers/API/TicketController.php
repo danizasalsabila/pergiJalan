@@ -196,6 +196,7 @@ class TicketController extends Controller
         $ticket->id_destinasi = $request->input('id_destinasi');
         $ticket->price = $request->input('price');
         $ticket->stock = $request->input('stock');
+        $ticket->ticket_sold = 0; 
         // $ticket->ticket_sold = $request->input('ticket_sold');
         // $ticket->visit_date = $request->input('visit_date');
         $ticket->created_at = $dt;
