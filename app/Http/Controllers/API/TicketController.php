@@ -255,7 +255,8 @@ class TicketController extends Controller
         $ticket = Ticket::with('destinasi')->join('destinasi', 'ticket.id_destinasi', '=', 'destinasi.id')
             ->select('ticket.*')
             ->where('destinasi.id_owner', $ownerId)
-            ->orderByDesc('ticket.ticket_sold')
+            ->where('ticket.ticket_sold', '>', 0)
+            ->orderByDesc('ticket.ticket_sold',)
             ->get();
 
         if ($ticket->count() > 0) {
