@@ -186,6 +186,7 @@ class TicketController extends Controller
 
         $request->validate([
             'id_destinasi' => 'required|exists:destinasi,id',
+            'name_ticket' => 'required|string',
             'price' => 'nullable|integer|min:1',
             'stock' => 'nullable|integer|min:0',
             // 'ticket_sold' => 'nullable|integer|min:0',
@@ -194,6 +195,7 @@ class TicketController extends Controller
 
         $ticket = new Ticket;
         $ticket->id_destinasi = $request->input('id_destinasi');
+        $ticket->name_ticket = $request->input('name_ticket');
         $ticket->price = $request->input('price');
         $ticket->stock = $request->input('stock');
         $ticket->ticket_sold = 0; 

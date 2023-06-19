@@ -10,7 +10,7 @@ class Ticket extends Model
     use HasFactory;
     protected $table = 'ticket';
 
-    protected $fillable = ['id_destinasi', 'price', 'stock', 'ticket_sold', 'created_at'];
+    protected $fillable = ['id_destinasi', 'name_ticket', 'price', 'stock', 'ticket_sold', 'created_at'];
 
     
 

@@ -14,7 +14,7 @@ class ETicket extends Model
 
     public function ticket()
     {
-        return $this->belongsTo(Ticket::class, 'id_ticket')->select('id', 'price',);
+        return $this->belongsTo(Ticket::class, 'id_ticket')->select('id', 'price', 'name_ticket');
     }
 
     public function destinasi()
