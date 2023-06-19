@@ -170,7 +170,7 @@ class ReviewController extends Controller
      */
     public function showByIdUser($id)
     {
-        $review = Review::whereHas('destinasi', function ($query) use ($id) {
+        $review = Review::with('destinasi', 'user')->whereHas('destinasi', function ($query) use ($id) {
             $query->where('id_owner', $id);
         })->get();
 
