@@ -172,7 +172,7 @@ class ReviewController extends Controller
     {
         $review = Review::with('destinasi', 'user')->whereHas('destinasi', function ($query) use ($id) {
             $query->where('id_owner', $id);
-        })->get();
+        })->orderBy('created_at', 'desc')->get();
 
 
         if ($review->count() > 0) {
