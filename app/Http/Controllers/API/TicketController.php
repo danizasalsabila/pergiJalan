@@ -303,6 +303,7 @@ class TicketController extends Controller
         $bulan = $dt->format('m');
 
         $requestTicket = [
+            'name_destinasi' => $request->name_destinasi,
             'price' => $request->price,
             'stock' => $request->stock,
             'updated_at' => $dt
