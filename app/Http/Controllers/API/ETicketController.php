@@ -269,7 +269,7 @@ class ETicketController extends Controller
     {
         //
         // $ticket = Ticket::where('id_destinasi', $id)->get();
-        $eticket = ETicket::with('destinasi')->where('id', $id)->get();
+        $eticket = ETicket::with('destinasi', 'ticket')->where('id', $id)->get();
         if ($eticket ->count() > 0) {
             return response([
                 'status' => 'ETicket berhasil ditampilkan',
