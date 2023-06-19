@@ -164,6 +164,31 @@ class ReviewController extends Controller
         }
     }
 
+        /**
+     * Display the specified resource.
+     * @return \Illuminate\Http\Response
+     */
+    public function showByIdUser($id)
+    {
+        $review = Review::whereHas('destinasi', function ($query) use ($id) {
+            $query->where('id_owner', $id);
+        })->get();
+
+
+        if ($review->count() > 0) {
+            return response([
+                'status' => 'Review berhasil ditampilkan',
+                'data' => $review
+            ], 200);
+        } else {
+            return response([
+                'status' => 'failed',
+                'message' => 'Review tidak ditemukan'
+            ], 404);
+        }
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      */

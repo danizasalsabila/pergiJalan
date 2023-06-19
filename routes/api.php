@@ -78,6 +78,8 @@ Route::get('review', function () {
 });
 Route::post('review', [ReviewController::class, 'store']);
 Route::get('review/{id}', [ReviewController::class, 'show']);
+Route::get('review/all/owner/{id}', [ReviewController::class, 'showByIdUser']);
+
 // Route::get('review/{id}', function () {
 //     return \App\Models\Review::with('user')->get();
 // });
