@@ -12,7 +12,7 @@ class Review extends Model
 
     public function destinasi()
     {
-        return $this->belongsTo(Destinasi::class, 'id_destinasi')->select('id','id_owner');
+        return $this->belongsTo(Destinasi::class, 'id_destinasi')->select('id','id_owner', 'name_destinasi');
     }
 
     public function user()
