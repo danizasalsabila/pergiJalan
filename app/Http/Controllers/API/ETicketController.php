@@ -16,7 +16,7 @@ class ETicketController extends Controller
      */
     public function index()
     {
-        $eticket = ETicket::with('ticket', 'user', 'destinasi')->get();
+        $eticket = ETicket::with('ticket', 'user', 'destinasi', 'owner')->get();
         if ($eticket->count() > 0) {
             return response([
                 'status' => 'success',
