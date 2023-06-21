@@ -16,7 +16,8 @@ class DestinasiController extends Controller
      */
     public function index()
     {
-        $destinasi = DB::table('destinasi')->orderBy('id', 'desc')->get();
+        $destinasi = Destinasi::with('owner')->orderBy('id', 'desc')->get();
+        // $destinasi = DB::table('destinasi')->orderBy('id', 'desc')->get();
 
         if ($destinasi != null) {
             return response([
