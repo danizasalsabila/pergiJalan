@@ -74,7 +74,7 @@ Route::get('eticket/byowner/week/{id_owner}', [ETicketController::class, 'getETi
 Route::get('/rating/{id}', [ReviewController::class, 'getRating']);
 Route::get('/rating/byowner/{id_owner}', [ReviewController::class, 'getRatingByIdOwner']);
 Route::get('review', function () {
-    return \App\Models\Review::with('destinasi')->get();
+    return \App\Models\Review::with('destinasi', 'user')->get();
 });
 Route::post('review', [ReviewController::class, 'store']);
 Route::get('review/{id}', [ReviewController::class, 'show']);
