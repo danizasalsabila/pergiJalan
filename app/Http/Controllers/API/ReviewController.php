@@ -78,7 +78,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $review = Review::with('destinasi')->get();
+        $review = Review::with('destinasi', 'user')->get();
         // $review = Review::with('review')->get();
 
 
