@@ -7,6 +7,7 @@ use App\Models\Destinasi;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DestinasiController extends Controller
 {
@@ -55,6 +56,12 @@ class DestinasiController extends Controller
         $bulan = $dt->format('m');
 
         // $destinasi =Destinasi::orderBy('id', 'desc')->get();
+
+        // Simpan foto baru
+        if ($request->hasfile('destination_picture')) {
+            $name = $request->destination_picture->store('gambar', 'public');
+            $request->destination_picture = $name;
+        }
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
@@ -126,8 +133,7 @@ class DestinasiController extends Controller
     public function showByIdOwner($id)
     {
         //
-        $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();
-        ;
+        $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();;
         if ($destinasi->count() > 0) {
             return response([
                 'status' => 'Destinasi by owner berhasil ditampilkan',
@@ -169,6 +175,21 @@ class DestinasiController extends Controller
         $dt = new DateTime();
         $tahun = $dt->format('y');
         $bulan = $dt->format('m');
+        
+        if ($request->hasfile('destination_picture')) {
+            // Hapus foto lama
+            $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
+
+            if ($oldFileName) {
+                if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
+                    Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
+                }
+            }
+
+            // Simpan foto baru
+            $name = $request->destination_picture->store('gambar', 'public');
+            $request->destination_picture = $name;
+        }
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
@@ -215,6 +236,16 @@ class DestinasiController extends Controller
     public function destroy(string $id)
     {
         $getDestinasi = Destinasi::where('id', $id)->first();
+
+        // Hapus foto di storage
+        $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
+            
+        if ($oldFileName) {
+            if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
+                Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
+            }
+        }
+        
         $destinasi = Destinasi::where('id', $id)->delete();
 
         if ($destinasi) {
@@ -228,7 +259,6 @@ class DestinasiController extends Controller
                 'message' => 'Data gagal dihapus'
             ], 404);
         }
-
     }
 
 
