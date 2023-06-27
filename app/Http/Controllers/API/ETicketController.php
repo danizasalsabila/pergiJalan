@@ -238,8 +238,9 @@ class ETicketController extends Controller
      */
     public function getETicketByWeekOwner(Request $request, $id_owner)
     {
-        $date = Carbon::parse($request->input('date'))->startOfDay();
-        $startDate = $date->copy()->subDays(7)->startOfDay();
+        $date = Carbon::parse($request->input('date'))->startOfDay()->toDateString();
+        $startDate = Carbon::parse($date)->subDays(7)->startOfDay()->toDateString();
+    
         
         $eticket = ETicket::with('destinasi')
         ->where('id_owner', $id_owner)

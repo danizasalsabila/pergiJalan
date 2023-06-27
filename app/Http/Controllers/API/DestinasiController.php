@@ -63,6 +63,7 @@ class DestinasiController extends Controller
             $request->destination_picture = $name;
         }
 
+        
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
             'description' => $request->description,
