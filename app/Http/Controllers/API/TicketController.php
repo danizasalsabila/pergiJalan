@@ -117,27 +117,49 @@ class TicketController extends Controller
 
     public function getTicketSoldByDestinationInWeek(Request $request)
     {
-        $date = Carbon::parse($request->input('date'))->startOfDay();
-        $startDate = $date->copy()->subDays(7)->startOfDay();
+        // $date = Carbon::parse($request->input('date'))->startOfDay();
+        // $startDate = $date->copy()->subDays(7)->startOfDay();
 
 
+        // $request->validate([
+        //     'id_destinasi' => 'required|exists:destinasi,id'
+        // ]);
+
+        // $destinationId = $request->input('id_destinasi');
+
+        // // Mengecek apakah terdapat E-Ticket dengan id_destinasi yang diberikan
+        // $eticketExists = ETicket::where('id_destinasi', $destinationId)->exists();
+        
+
+        // if (!$eticketExists) {
+        //     return response()->json(['message' => 'Tidak terdapat pembelian tiket'], 404);
+        // }
+        // $ticketSold = ETicket::where('id_destinasi', $destinationId)
+        // ->whereBetween('date_book', [$startDate, $date])
+        // ->count();
+
+        // return response()->json(['ticket_sold' => $ticketSold], 200);
+        $date = Carbon::parse($request->input('date'))->startOfDay()->toDateString();
+        $startDate = Carbon::parse($date)->subDays(7)->startOfDay()->toDateString();
+    
         $request->validate([
             'id_destinasi' => 'required|exists:destinasi,id'
         ]);
-
+    
         $destinationId = $request->input('id_destinasi');
-
+    
         // Mengecek apakah terdapat E-Ticket dengan id_destinasi yang diberikan
         $eticketExists = ETicket::where('id_destinasi', $destinationId)->exists();
-        
-
+    
         if (!$eticketExists) {
             return response()->json(['message' => 'Tidak terdapat pembelian tiket'], 404);
         }
+    
         $ticketSold = ETicket::where('id_destinasi', $destinationId)
-        ->whereBetween('date_book', [$startDate, $date])
-        ->count();
-
+            ->whereDate('date_book', '>=', $startDate)
+            ->whereDate('date_book', '<=', $date)
+            ->count();
+    
         return response()->json(['ticket_sold' => $ticketSold], 200);
     }
 
