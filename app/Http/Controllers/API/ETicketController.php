@@ -244,7 +244,8 @@ class ETicketController extends Controller
         
         $eticket = ETicket::with('destinasi')
         ->where('id_owner', $id_owner)
-        ->whereBetween('date_book', [$startDate, $date])
+        ->whereDate('date_book', '>=', $startDate)
+        ->whereDate('date_book', '<=', $date)
         ->get();
 
 
