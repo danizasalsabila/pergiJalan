@@ -267,7 +267,10 @@ class DestinasiController extends Controller
             // Simpan foto baru
             $name = $request->destination_picture->store('gambar', 'public');
             $request->destination_picture = $name;
-        } 
+        } else {
+        // Jika tidak ada foto baru, gunakan foto sebelumnya
+        $requestDestinasi['destination_picture'] = $getDestinasi->getRawOriginal('destination_picture');
+    }
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
