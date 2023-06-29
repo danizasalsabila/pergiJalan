@@ -63,7 +63,7 @@ class DestinasiController extends Controller
             $request->destination_picture = $name;
         }
 
-        
+
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
             'description' => $request->description,
@@ -134,7 +134,8 @@ class DestinasiController extends Controller
     public function showByIdOwner($id)
     {
         //
-        $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();;
+        $destinasi = Destinasi::where('id_owner', $id)->orderBy('id', 'desc')->get();
+        ;
         if ($destinasi->count() > 0) {
             return response([
                 'status' => 'Destinasi by owner berhasil ditampilkan',
@@ -176,7 +177,7 @@ class DestinasiController extends Controller
     //     $dt = new DateTime();
     //     $tahun = $dt->format('y');
     //     $bulan = $dt->format('m');
-        
+
 
     //     if ($request->hasfile('destination_picture')) {
     //         // Hapus foto lama
@@ -218,7 +219,7 @@ class DestinasiController extends Controller
     // ];
 
 
-      
+
 
     //     $id = $getDestinasi->id;
     //     $updateDestinasi = DB::table('destinasi')->where('id', $id)->update($requestDestinasi);
@@ -237,7 +238,7 @@ class DestinasiController extends Controller
     //     }
     // }
 
-    
+
     public function update(Request $request, $id)
     {
         //
@@ -253,7 +254,7 @@ class DestinasiController extends Controller
         $dt = new DateTime();
         $tahun = $dt->format('y');
         $bulan = $dt->format('m');
-        
+
         if ($request->hasfile('destination_picture')) {
             // Hapus foto lama
             $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
@@ -268,9 +269,9 @@ class DestinasiController extends Controller
             $name = $request->destination_picture->store('gambar', 'public');
             $request->destination_picture = $name;
         } else {
-        // Jika tidak ada foto baru, gunakan foto sebelumnya
-        $requestDestinasi['destination_picture'] = $getDestinasi->getRawOriginal('destination_picture');
-    }
+            // Jika tidak ada foto baru, gunakan foto sebelumnya
+            $requestDestinasi['destination_picture'] = $getDestinasi->destination_picture;
+        }
 
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
@@ -309,7 +310,7 @@ class DestinasiController extends Controller
             ], 404);
         }
     }
-   
+
 
 
     /**
@@ -322,13 +323,13 @@ class DestinasiController extends Controller
 
         // Hapus foto di storage
         $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
-            
+
         if ($oldFileName) {
             if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
                 Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
             }
         }
-        
+
         $destinasi = Destinasi::where('id', $id)->delete();
 
         if ($destinasi) {
