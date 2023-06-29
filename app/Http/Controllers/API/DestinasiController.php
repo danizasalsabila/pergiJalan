@@ -177,21 +177,6 @@ class DestinasiController extends Controller
         $tahun = $dt->format('y');
         $bulan = $dt->format('m');
         
-        if ($request->hasfile('destination_picture')) {
-            // Hapus foto lama
-            $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
-
-            if ($oldFileName) {
-                if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
-                    Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
-                }
-            }
-
-            // Simpan foto baru
-            $name = $request->destination_picture->store('gambar', 'public');
-            $request->destination_picture = $name;
-        }
-
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
             'description' => $request->description,
@@ -213,6 +198,26 @@ class DestinasiController extends Controller
             'updated_at' => $dt
         ];
 
+        if ($request->hasfile('destination_picture')) {
+            // Hapus foto lama
+            $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
+
+            if ($oldFileName) {
+                if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
+                    Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
+                }
+            }
+
+            // Simpan foto baru
+            $name = $request->destination_picture->store('gambar', 'public');
+            $request->destination_picture = $name;
+        }  else {
+        // Jika tidak ada foto baru, gunakan foto sebelumnya
+        $requestDestinasi['destination_picture'] = $getDestinasi->getRawOriginal('destination_picture');
+    }
+
+      
+
         $id = $getDestinasi->id;
         $updateDestinasi = DB::table('destinasi')->where('id', $id)->update($requestDestinasi);
 
@@ -229,6 +234,78 @@ class DestinasiController extends Controller
             ], 404);
         }
     }
+
+    
+    // public function update(Request $request, $id)
+    // {
+    //     //
+    //     $getDestinasi = Destinasi::where('id', $id)->first();
+    //     // $getDestinasi = Destinasi::find($id);
+
+    //     if (!$getDestinasi) {
+    //         return response([
+    //             'status' => 'failed',
+    //             'message' => 'Data tidak ditemukan'
+    //         ], 404);
+    //     }
+    //     $dt = new DateTime();
+    //     $tahun = $dt->format('y');
+    //     $bulan = $dt->format('m');
+        
+    //     if ($request->hasfile('destination_picture')) {
+    //         // Hapus foto lama
+    //         $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
+
+    //         if ($oldFileName) {
+    //             if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
+    //                 Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
+    //             }
+    //         }
+
+    //         // Simpan foto baru
+    //         $name = $request->destination_picture->store('gambar', 'public');
+    //         $request->destination_picture = $name;
+    //     } 
+
+    //     $requestDestinasi = [
+    //         'name_destinasi' => $request->name_destinasi,
+    //         'description' => $request->description,
+    //         'address' => $request->address,
+    //         'city' => $request->city,
+    //         'category' => $request->category,
+    //         'destination_picture' => $request->destination_picture,
+    //         'contact' => $request->contact,
+    //         'hobby' => $request->hobby,
+    //         'minutes_spend' => $request->minutes_spend,
+    //         'latitude' => $request->latitude,
+    //         'longitude' => $request->longitude,
+    //         'url_map' => $request->url_map,
+    //         'rec_weather' => $request->rec_weather,
+    //         'open_hour' => $request->open_hour,
+    //         'closed_hour' => $request->closed_hour,
+    //         'fasility' => $request->fasility,
+    //         'security' => $request->security,
+    //         'updated_at' => $dt
+    //     ];
+
+    //     $id = $getDestinasi->id;
+    //     $updateDestinasi = DB::table('destinasi')->where('id', $id)->update($requestDestinasi);
+
+    //     if ($updateDestinasi != null) {
+    //         return response([
+    //             'status' => 'success',
+    //             'message' => 'Destinasi Berhasil Diedit',
+    //             'data' => $requestDestinasi
+    //         ], 200);
+    //     } else {
+    //         return response([
+    //             'status' => 'failed',
+    //             'message' => 'Destinasi gagal Diedit'
+    //         ], 404);
+    //     }
+    // }
+   
+
 
     /**
      * Remove the specified resource from storage.
