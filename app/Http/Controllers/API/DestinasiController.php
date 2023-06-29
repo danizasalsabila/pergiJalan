@@ -255,24 +255,7 @@ class DestinasiController extends Controller
         $tahun = $dt->format('y');
         $bulan = $dt->format('m');
 
-        if ($request->hasfile('destination_picture')) {
-            // Hapus foto lama
-            $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
-
-            if ($oldFileName) {
-                if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
-                    Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
-                }
-            }
-
-            // Simpan foto baru
-            $name = $request->destination_picture->store('gambar', 'public');
-            $request->destination_picture = $name;
-        } elseif (empty($request->destination_picture)) {
-            // Jika tidak ada foto baru, gunakan foto sebelumnya
-            $requestDestinasi['destination_picture'] = $getDestinasi->destination_picture;
-        }
-
+        
         $requestDestinasi = [
             'name_destinasi' => $request->name_destinasi,
             'description' => $request->description,
@@ -293,6 +276,25 @@ class DestinasiController extends Controller
             'security' => $request->security,
             'updated_at' => $dt
         ];
+
+        if ($request->hasfile('destination_picture')) {
+            // Hapus foto lama
+            $oldFileName = $getDestinasi->getRawOriginal('destination_picture');
+
+            if ($oldFileName) {
+                if (Storage::disk('public')->exists($getDestinasi->getRawOriginal('destination_picture'))) {
+                    Storage::disk('public')->delete($getDestinasi->getRawOriginal('destination_picture'));
+                }
+            }
+
+            // Simpan foto baru
+            $name = $request->destination_picture->store('gambar', 'public');
+            $request->destination_picture = $name;
+        } else if (empty($request->destination_picture)) {
+            // Jika tidak ada foto baru, gunakan foto sebelumnya
+            $requestDestinasi['destination_picture'] = $getDestinasi->destination_picture;
+        }
+
 
         $id = $getDestinasi->id;
         $updateDestinasi = DB::table('destinasi')->where('id', $id)->update($requestDestinasi);
