@@ -192,10 +192,7 @@ class DestinasiController extends Controller
     //         // Simpan foto baru
     //         $name = $request->destination_picture->store('gambar', 'public');
     //         $request->destination_picture = $name;
-    //     }  else {
-    //     // Jika tidak ada foto baru, gunakan foto sebelumnya
-    //     $requestDestinasi['destination_picture'] = $getDestinasi->getRawOriginal('destination_picture');
-    // }
+
 
     // $requestDestinasi = [
     //     'name_destinasi' => $request->name_destinasi,
@@ -256,26 +253,7 @@ class DestinasiController extends Controller
         $bulan = $dt->format('m');
 
         
-        $requestDestinasi = [
-            'name_destinasi' => $request->name_destinasi,
-            'description' => $request->description,
-            'address' => $request->address,
-            'city' => $request->city,
-            'category' => $request->category,
-            // 'destination_picture' => $request->destination_picture,
-            'contact' => $request->contact,
-            'hobby' => $request->hobby,
-            'minutes_spend' => $request->minutes_spend,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'url_map' => $request->url_map,
-            'rec_weather' => $request->rec_weather,
-            'open_hour' => $request->open_hour,
-            'closed_hour' => $request->closed_hour,
-            'fasility' => $request->fasility,
-            'security' => $request->security,
-            'updated_at' => $dt
-        ];
+
 
         if ($request->hasfile('destination_picture')) {
             // Hapus foto lama
@@ -289,11 +267,33 @@ class DestinasiController extends Controller
 
             // Simpan foto baru
             $name = $request->destination_picture->store('gambar', 'public');
-            $request->destination_picture = $name;
-        } else if (empty($request->destination_picture)) {
+            // $request->destination_picture = $name;
+            $destinationPicture = $name;
+        } else {
             // Jika tidak ada foto baru, gunakan foto sebelumnya
-            $requestDestinasi['destination_picture'] = $getDestinasi->destination_picture;
+            $destinationPicture = $getDestinasi->getRawOriginal('destination_picture');
         }
+
+        $requestDestinasi = [
+            'name_destinasi' => $request->name_destinasi,
+            'description' => $request->description,
+            'address' => $request->address,
+            'city' => $request->city,
+            'category' => $request->category,
+            'destination_picture' => $destinationPicture,
+            'contact' => $request->contact,
+            'hobby' => $request->hobby,
+            'minutes_spend' => $request->minutes_spend,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'url_map' => $request->url_map,
+            'rec_weather' => $request->rec_weather,
+            'open_hour' => $request->open_hour,
+            'closed_hour' => $request->closed_hour,
+            'fasility' => $request->fasility,
+            'security' => $request->security,
+            'updated_at' => $dt
+        ];
 
 
         $id = $getDestinasi->id;
