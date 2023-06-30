@@ -10,7 +10,7 @@ class ETicket extends Model
     use HasFactory;
     protected $table = 'eticket';
 
-    protected $fillable = ['id_user', 'id_owner', 'id_destinasi', 'id_ticket', 'name_visitor', 'contact_visitor', 'date_visit'];
+    protected $fillable = ['id_user', 'id_owner', 'id_destinasi', 'id_ticket', 'name_visitor', 'contact_visitor', 'date_visit', 'admin_price', 'total_price'];
 
     public function ticket()
     {
