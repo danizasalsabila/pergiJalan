@@ -70,6 +70,9 @@ Route::get('eticket/byowner/month/{id_owner}', [ETicketController::class, 'getET
 Route::get('eticket/byowner/week/{id_owner}', [ETicketController::class, 'getETicketByWeekOwner']);
 
 
+//ADMIN TRANSACTION
+Route::get('adminprice', [AdminTransactionController::class, 'index']);
+
 //REVIEW
 Route::get('/rating/{id}', [ReviewController::class, 'getRating']);
 Route::get('/rating/byowner/{id_owner}', [ReviewController::class, 'getRatingByIdOwner']);
