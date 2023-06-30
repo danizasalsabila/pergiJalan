@@ -7,6 +7,7 @@ use App\Http\Controllers\API\DestinasiController;
 use App\Http\Controllers\API\TicketController;
 use App\Http\Controllers\API\ETicketController;
 use App\Http\Controllers\API\ReviewController;
+use App\Http\Controllers\API\AdminTransactionController;
 use App\Http\Controllers\API\AuthControllerUser;
 use App\Http\Controllers\API\AuthControllerOwnerBusiness;
 
