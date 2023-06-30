@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminTransaction;
 use App\Models\ETicket;
 use App\Models\Ticket;
 use Carbon\Carbon;
@@ -149,6 +150,11 @@ class ETicketController extends Controller
         $ticket = Ticket::findOrFail($request->input('id_ticket'));
         $eticket->price = $ticket->price;
 
+        // Menambahkan nilai admin_price dan menghitung total_price
+        $adminPrice = 1500;
+        $eticket->admin_price = $adminPrice;
+        $eticket->total_price = $ticket->price + $adminPrice;
+
         $eticket->save();
 
         //to reduce the amount of stock on ticket table with id_ticket request
@@ -161,7 +167,14 @@ class ETicketController extends Controller
         $ticket->ticket_sold = $ticketSold;
         $ticket->save();
 
-        if ($eticket != null) {
+        // Membuat entri baru pada tabel Transaksi
+        $admintransaksi = new AdminTransaction;
+        $admintransaksi->id_eticket = $eticket->id;
+        $admintransaksi->admin_price = $eticket->admin_price;
+        $admintransaksi->save();
+
+        if ($eticket != null && $admintransaksi != null) {
+            $eticket = ETicket::with('admintransaksi')->findOrFail($eticket->id);
             return response([
                 'status' => 'success',
                 'message' => 'E-Ticket Berhasil Ditambahkan',
