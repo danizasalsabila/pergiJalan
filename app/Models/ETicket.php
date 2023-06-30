@@ -17,6 +17,11 @@ class ETicket extends Model
         return $this->belongsTo(Ticket::class, 'id_ticket')->select('id', 'price', 'name_ticket');
     }
 
+    public function admintransaksi()
+    {
+        return $this->hasOne(AdminTransaction::class, 'id_eticket', 'id');
+    }
+
     public function destinasi()
     {
         return $this->belongsTo(Destinasi::class, 'id_destinasi')->select('id', 'name_destinasi', 'address', 'contact', 'open_hour', 'closed_hour');
