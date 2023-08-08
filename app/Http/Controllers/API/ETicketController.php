@@ -141,9 +141,10 @@ class ETicketController extends Controller
         $eticket->date_book = $dt;
 
         // Generate random ID to make payment virtual account
-        $length = 12; // Jumlah karakter yang diinginkan
-        $randomId = str_pad(rand(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
-        $eticket->virtual_account = $randomId;
+        // $length = 12; // Jumlah karakter yang diinginkan
+        // $randomId = str_pad(rand(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
+        // $eticket->virtual_account = $randomId;
+        $eticket->virtual_account = 929292929211;
         $eticket->save();
 
         // Mendapatkan harga tiket dari tabel 'ticket' berdasarkan 'id_ticket'
